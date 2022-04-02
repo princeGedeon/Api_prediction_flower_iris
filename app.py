@@ -1,10 +1,19 @@
-from flask import Flask, request,jsonify
+from flask import Flask,render_template,session,url_for
 import numpy as np
+from flask_wtf import FlaskForm
+from wtforms import TextField,SubmitField
 from tensorflow.keras.models import load_model
 import joblib
 app = Flask(__name__)
 
+app.config["SECRET_KEY"]="djsdprincdenksc"
 
+class FlowerForm(FlaskForm):
+    sep_lenght=TextField("Longueur du sepale")
+    sep_width=TextField("Largeur du sepale")
+    pet_lenght = TextField("Longueur du petale")
+    pet_width = TextField("Largeur du petale")
+    submit=SubmitField("Analyser")
 def return_prediction(model, scaler, flower_example):
     s_len = flower_example['sepal_length']
     s_wid = flower_example['sepal_width']
